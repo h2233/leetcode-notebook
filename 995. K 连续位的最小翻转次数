@@ -1,3 +1,4 @@
+//队列优化
 class Solution {
     public int minKBitFlips(int[] nums, int k) {
         int ret = 0;
@@ -15,5 +16,47 @@ class Solution {
             }
         }
         return ret;
+    }
+}
+//滑动窗口
+class Solution {
+    public int minKBitFlips(int[] nums, int k) {
+        int n = nums.length;
+        int ret = 0, flag = 0;
+        for(int i = 0;i < n;i++){
+            if(i >= k && nums[i-k] > 1){
+                flag--;
+                nums[i-k] -= 2;
+            }
+            if(flag % 2 == nums[i]){
+                if(i + k > n){
+                    return -1;
+                }
+                flag++;
+                ret++;
+                nums[i] += 2;
+            }
+        }
+        return ret;
+    }
+}
+//差分数组
+class Solution {
+    public int minKBitFlips(int[] nums, int k) {
+        int n = nums.length;
+        int[] diff = new int [n+1];
+        int flag = 0,revcen = 0;
+        for(int i = 0;i < n ;i++){
+            revcen += diff[i];
+            if(revcen % 2 == nums[i]){
+                if(i + k > n){
+                    return -1;
+                }
+                flag++;
+                revcen++;
+                diff[i+k]--;
+            }
+        }
+        return flag;
     }
 }
