@@ -1,0 +1,19 @@
+class Solution {
+    public int minKBitFlips(int[] nums, int k) {
+        int ret = 0;
+        Deque<Integer> que = new LinkedList<>();
+        for(int i =0;i < nums.length;i++){
+            if(que.size() > 0 && que.peek() + k - 1 < i){
+                que.removeFirst();
+            }
+            if(que.size() % 2 == nums[i]){
+                if(i + k > nums.length){
+                    return -1;
+                }
+                que.add(i);
+                ret++;
+            }
+        }
+        return ret;
+    }
+}
