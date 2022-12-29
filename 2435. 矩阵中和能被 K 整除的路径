@@ -1,0 +1,17 @@
+//动态规划
+class Solution {
+    public int numberOfPaths(int[][] grid, int k) {
+        var mod = (int)1e9 + 7;
+        int m = grid.length, n = grid[0].length;
+        var f = new int[m+1][n+1][k];//f[i+1][j+1][v] == grid[i][j]处的模k=v的路径和
+        f[0][1][0] = 1;
+        for(int i = 0;i < m;i++){
+            for(int j = 0;j < n;j++){
+                for(int v = 0;v < k;v++){
+                    f[i+1][j+1][(v + grid[i][j]) % k] = (f[i][j+1][v] + f[i+1][j][v]) % mod;//递推公式！！
+                }
+            }
+        }
+        return f[m][n][0];
+    }
+}
