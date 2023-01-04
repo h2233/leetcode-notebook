@@ -1,0 +1,63 @@
+class Solution {
+    int [] ix = new int [] {0,1,0,-1};
+    int [] iy = new int [] {1,0,-1,0};
+    public int closedIsland(int[][] grid) {
+        int m = grid.length;
+        int n = grid[0].length;
+        int ret = 0;
+        for(int i = 1;i < m-1;i++){
+            for(int j = 1;j < n-1;j++){
+                if(grid[i][j] == 0){
+                   if(closedIslandNum(grid,i,j) == 0){
+                        ret += 1;
+                    }
+                }
+            }
+        }
+        return ret;
+    }
+    public int closedIslandNum(int[][] grid,int x,int y){
+        int ret = 0;
+        if(grid[x][y] == 0){
+            grid[x][y] += 2;
+            if(x == 0 || x == grid.length-1 || y == grid[0].length-1 || y == 0){
+                return 1;
+            }
+            else{
+                for(int i = 0;i < 4;i++){
+                    int xx = x+ix[i];
+                    int yy = y+iy[i];
+                    if(xx < grid.length && xx >= 0 && yy < grid[0].length && yy >= 0){
+                        ret += closedIslandNum(grid,xx,yy);
+                    }
+                }    
+                return ret;
+            }
+        }
+        else{
+            grid[x][y] += 2;
+            return 0;
+        }
+    }
+}
+//别人的
+class Solution {
+    int[][] g;
+    int n, m, ans;
+
+    public int closedIsland(int[][] grid) {
+        g = grid; n = g.length; m = g[0].length;
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < m; j++) {
+                if (g[i][j] == 0 && dfs(i, j)) ans++;
+            }
+        }
+        return ans;
+    }
+    boolean dfs(int i, int j) {
+        if (i < 0 || i >= n || j < 0 || j >= m) return false; // 终止条件1
+        if (g[i][j] == 1) return true; // 终止条件2
+        g[i][j] = 1;
+        return dfs(i + 1, j) & dfs(i - 1, j) & dfs(i, j + 1) & dfs(i, j - 1);
+    }
+}
