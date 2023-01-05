@@ -1,0 +1,32 @@
+//官方解
+class Solution {
+    public int maximumDifference(int[] nums) {
+        int permin = nums[0];
+        int ret = -1; 
+        for(int i = 0;i < nums.length;i++){
+            if(nums[i] > permin){
+                ret = Math.max(ret,nums[i] - permin);
+            }
+            else{
+                permin = nums[i];
+            }
+        }
+        return ret;
+    }
+}
+//自己的
+class Solution {
+    public int maximumDifference(int[] nums) {
+        int right = 1,left = 0,flag = 0;
+        int ret = -1; 
+        for(;right < nums.length;right++){
+            for(left = flag;left < right;left++)
+                if(nums[right] - nums[left] > ret){
+                    ret = nums[right] - nums[left];
+                    flag = left;
+                }
+        }
+        if(ret > 0) return ret;
+        return -1;
+    }
+}
