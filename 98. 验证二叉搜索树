@@ -47,3 +47,20 @@ class Solution {
         return isValidBST(node.left, lower, node.val) && isValidBST(node.right, node.val, upper);
     }
 }
+//改进
+class Solution {
+    static long pre = Long.MIN_VALUE;
+    public boolean isValidBST(TreeNode root){
+        if(dnf(root)) return true;
+        return false;
+    }
+    public boolean dnf(TreeNode root){
+        boolean p1 = true,p2 = true,p3 = true;
+        if(root == null) return true;
+        p1 = dnf(root.left);
+        p2 = pre < root.val;
+        pre = root.val;
+        p3 = dnf(root.right);
+        return p1 && p2 && p3; 
+    }
+}
