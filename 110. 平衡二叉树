@@ -1,0 +1,50 @@
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode() {}
+ *     TreeNode(int val) { this.val = val; }
+ *     TreeNode(int val, TreeNode left, TreeNode right) {
+ *         this.val = val;
+ *         this.left = left;
+ *         this.right = right;
+ *     }
+ * }
+ */
+class Solution {
+    public boolean isBalanced(TreeNode root) {
+        boolean p1 = false;
+        if(root == null) return true;
+        p1 = dnf(root.left) - dnf(root.right) <= 1 && dnf(root.left) - dnf(root.right) >= -1;
+        return isBalanced(root.left) && isBalanced(root.right) && p1;
+    }
+    public int dnf(TreeNode root){
+        if(root == null) return 0;
+        return Math.max(dnf(root.left),dnf(root.right)) + 1; 
+    }
+}
+class Solution {
+    public boolean isBalanced(TreeNode root) {
+        return height(root) >= 0;
+    }
+
+    public int height(TreeNode root) {
+        if (root == null) {
+            return 0;
+        }
+        int leftHeight = height(root.left);
+        int rightHeight = height(root.right);
+        if (leftHeight == -1 || rightHeight == -1 || Math.abs(leftHeight - rightHeight) > 1) {
+            return -1;
+        } else {
+            return Math.max(leftHeight, rightHeight) + 1;
+        }
+    }
+}
+
+作者：LeetCode-Solution
+链接：https://leetcode.cn/problems/balanced-binary-tree/solution/ping-heng-er-cha-shu-by-leetcode-solution/
+来源：力扣（LeetCode）
+著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
