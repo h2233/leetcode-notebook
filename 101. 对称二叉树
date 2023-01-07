@@ -1,0 +1,57 @@
+//自己写的反面教材
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode() {}
+ *     TreeNode(int val) { this.val = val; }
+ *     TreeNode(int val, TreeNode left, TreeNode right) {
+ *         this.val = val;
+ *         this.left = left;
+ *         this.right = right;
+ *     }
+ * }
+ */
+class Solution {
+    public boolean isSymmetric(TreeNode root) {
+        Queue<TreeNode> que = new LinkedList();
+        List<Integer> ret = new ArrayList<>();
+        que.add(root);
+        while(que.size() > 0){
+            TreeNode tmp;
+            for(int i = que.size();i > 0;i--){
+                tmp = que.remove();
+                if(tmp!=null){
+                    que.add(tmp.left);
+                    que.add(tmp.right);
+                    ret.add(tmp.val);
+                }
+                else{
+                    ret.add(null);
+                }
+            }
+            for(int j = 0;j < ret.size()/2;j++){
+                if(ret.get(j) != ret.get(ret.size() - 1 - j)) return false;
+            }
+            ret.clear();
+        }
+        return true;
+    }
+}
+//官方的思路
+class Solution {
+    public boolean isSymmetric(TreeNode root) {
+        return dnf(root,root);
+    }
+    public boolean dnf(TreeNode p,TreeNode q){
+        boolean p1 = true;
+        if(p == null && q == null) return true;
+        if(p != null && q != null){
+            p1 = p.val == q.val;
+            return dnf(p.left,q.right) && dnf(p.right,q.left) && p1;
+        }
+        return false;
+    }
+}
