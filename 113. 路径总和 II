@@ -1,0 +1,34 @@
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode() {}
+ *     TreeNode(int val) { this.val = val; }
+ *     TreeNode(int val, TreeNode left, TreeNode right) {
+ *         this.val = val;
+ *         this.left = left;
+ *         this.right = right;
+ *     }
+ * }
+ */
+class Solution {
+    List<List<Integer>> ret = new LinkedList<List<Integer>>();
+    Deque<Integer> path = new LinkedList<>();//用一个队列记录path
+    public List<List<Integer>> pathSum(TreeNode root, int targetSum) {
+        dnf(root,targetSum);
+        return ret;
+    }
+    public void dnf(TreeNode root,int targetSum){
+        if(root == null) return;
+        path.offerLast(root.val);
+        targetSum -= root.val;
+        if(root.left == null && root.right == null){
+            if(targetSum == 0)  ret.add(new LinkedList<>(path));//还可以这样造链表
+        }
+        dnf(root.left,targetSum);
+        dnf(root.right,targetSum);
+        path.pollLast();//同一主支，不同分支，就这样搞定了。
+    }
+}
